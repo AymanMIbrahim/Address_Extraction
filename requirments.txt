@@ -2,5 +2,6 @@ requests
 fuzzywuzzy
 pandas
 Flask
+flask-cors
 python-Levenshtein
 -e .
