@@ -1,10 +1,15 @@
-from flask import Flask,request
+from flask import Flask,request,Response
 from flask_cors import CORS
 from src.logic import ExtractAddress
 
 
 app = Flask(__name__)
 CORS(app)
+
+@app.after_request
+def apply_csp(response: Response):
+    response.headers['Content-Security-Policy'] = "upgrade-insecure-requests"
+    return response
 
 @app.route('/get_extracted_address', methods=['POST'])
 def get_extracted_address():
