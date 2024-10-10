@@ -9,6 +9,7 @@ class ExtractAddress:
     # Main function to extract the address information
     def get_address_information(self):
         Information = {
+            "status":"",
             "bulid_no": "",
             "street": "",
             "village": "",  # Not handled as per instructions
