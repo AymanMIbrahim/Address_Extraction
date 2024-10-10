@@ -6,29 +6,28 @@ class ExtractAddress:
         self.address1 = address1
         self.address2 = address2
 
-    def extract_information_from_address(self):
-        # Step 1: Remove Address2 content from Address1 and clean the final address
-        cleaned_address = self.address1.replace(self.address2, '').strip()
-
-        # Step 2: Remove duplicates from the end
-        final_cleaned_address = remove_duplicates_from_end(cleaned_address,self.address2)
-
-        # Step 3: Extract building number
-        building_number = extract_building_number(final_cleaned_address)
-
-        # Step 4: Remove building number from the address to get the street
-        street = remove_building_number_from_address(final_cleaned_address, building_number)
-        street = clean_street(street)
-
-        # Step 5: Extract Village, District, and Gov from the address
-        village, district, gov = extract_village_district_gov(final_cleaned_address)
-
-        # Return the cleaned information as a dictionary
-        information = {
-            "bulid_no": building_number,
-            "street": street,
-            "village": village,
-            "district": district,
-            "gov": gov
+    # Main function to extract the address information
+    def get_address_information(self):
+        Information = {
+            "bulid_no": "",
+            "street": "",
+            "village": "",  # Not handled as per instructions
+            "district": "",
+            "gov": ""
         }
-        return information
+
+        # Step 1: Extract district and gov from Address2
+        if self.address2:
+            address2_parts = self.address2.split('-')
+            if len(address2_parts) >= 2:
+                Information["district"] = address2_parts[0].strip()
+                Information["gov"] = address2_parts[1].strip()
+
+        # Step 2: Extract the building number from Address1
+        Information["bulid_no"] = extract_building_number(self.address1)
+
+        # Step 3: Remove the building number from Address1 and clean the street part
+        remaining_address = self.address1.replace(Information["bulid_no"], '').strip()
+        Information["street"] = clean_street(remaining_address, self.address2)
+
+        return Information

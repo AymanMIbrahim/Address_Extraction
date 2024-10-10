@@ -9,7 +9,7 @@ def get_extracted_address():
     address1 = request.json['address1']
     address2 = request.json['address2']
     pipline = ExtractAddress(address1,address2)
-    Information = pipline.extract_information_from_address()
+    Information = pipline.get_address_information()
 
 
     return Information
