@@ -1,0 +1,6 @@
+requests
+fuzzywuzzy
+pandas
+Flask
+python-Levenshtein
+-e .
