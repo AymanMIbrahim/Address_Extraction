@@ -8,10 +8,8 @@ app = Flask(__name__)
 def get_extracted_address():
     address1 = request.json['address1']
     address2 = request.json['address2']
-    print(address1)
-    print(address2)
     pipline = ExtractAddress(address1,address2)
-    Information = pipline.get_address()
+    Information = pipline.extract_information_from_address()
 
 
     return Information
