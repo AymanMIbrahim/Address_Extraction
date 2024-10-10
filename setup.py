@@ -17,7 +17,7 @@ def get_requirements(path:str) -> List[str]:
     return req
 
 setup(
-    name='Validation_Employees',
+    name='Address Extractor',
     version='0.0.1',
     author='Ayman M. Ibrahim',
     author_email='ayman.ibrahim@theaddressholding.com',
