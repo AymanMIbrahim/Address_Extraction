@@ -12,7 +12,7 @@ class ExtractAddress:
             "status":"",
             "bulid_no": "",
             "street": "",
-            "village": "",  # Not handled as per instructions
+            "village": "",
             "district": "",
             "gov": ""
         }
@@ -21,14 +21,16 @@ class ExtractAddress:
         if self.address2:
             address2_parts = self.address2.split('-')
             if len(address2_parts) >= 2:
-                Information["district"] = address2_parts[0].strip()
-                Information["gov"] = address2_parts[1].strip()
+                Information["district"] = re.sub(r'[^ء-ي0-9\s]', '', address2_parts[0]).strip()
+                Information["gov"] = re.sub(r'[^ء-ي0-9\s]', '', address2_parts[1]).strip()
 
         # Step 2: Extract the building number from Address1
         Information["bulid_no"] = extract_building_number(self.address1)
 
         # Step 3: Remove the building number from Address1 and clean the street part
         remaining_address = self.address1.replace(Information["bulid_no"], '').strip()
-        Information["street"] = clean_street(remaining_address, self.address2)
-
+        village_name, cleaned_street = clean_street(remaining_address, self.address2)
+        # Store both values in the Information dictionary
+        Information["village"] = village_name
+        Information["street"] = cleaned_street
         return Information
