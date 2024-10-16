@@ -37,7 +37,7 @@ def get_extracted_address():
             "status": "falied",
             "bulid_no": "",
             "street": "",
-            "village": "",  # Not handled as per instructions
+            "village": "",
             "district": "",
             "gov": "",
             "error": str(e)

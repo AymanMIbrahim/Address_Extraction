@@ -21,7 +21,7 @@ class ExtractAddress:
         if self.address2:
             address2_parts = self.address2.split('-')
             if len(address2_parts) >= 2:
-                Information["district"] = re.sub(r'[^ء-ي0-9\s]', '', address2_parts[0]).strip()
+                Information["district"] = re.sub(r'[^ء-ي٠-٩\s]', '', address2_parts[0]).strip()
                 Information["gov"] = re.sub(r'[^ء-ي0-9\s]', '', address2_parts[1]).strip()
 
         # Step 2: Extract the building number from Address1

@@ -9,6 +9,11 @@ def convert_to_arabic_digits(number):
     }
     return ''.join(western_to_arabic.get(digit, digit) for digit in number)
 
+def get_arabic_standalone_character_after(text, keyword):
+    # Pattern to find a standalone Arabic character after the specified keyword
+    pattern = rf"{keyword}\s*([\u0621-\u064A])"  # Capture Arabic letters
+    match = re.search(pattern, text)
+    return match.group(1) if match else None  # Return the standalone Arabic character or None if not found
 
 # Function to extract the building number from the address
 def extract_building_number(address):
@@ -22,7 +27,11 @@ def extract_building_number(address):
     # First, check for building number after "عماره", "عمارة", or "ع"
     match = re.search(building_number_with_label_pattern, address)
     if match:
-        building_number = match.group(1).strip()  # Get the number after the label
+        building_number = match.group(1).strip()
+        # Get the number after the label
+        Lettter_after_building_number = get_arabic_standalone_character_after(address, building_number)
+        if Lettter_after_building_number:
+            return convert_to_arabic_digits(building_number)+" "+Lettter_after_building_number
         return convert_to_arabic_digits(building_number)  # Convert to Arabic digits
 
     # If not found, fall back to the general pattern for building numbers
@@ -30,6 +39,9 @@ def extract_building_number(address):
     match = re.search(building_number_general_pattern, address)
     if match:
         building_number = match.group().strip()
+        Lettter_after_building_number = get_arabic_standalone_character_after(address, building_number)
+        if Lettter_after_building_number:
+            return convert_to_arabic_digits(building_number)+" "+Lettter_after_building_number
         return convert_to_arabic_digits(building_number)  # Convert to Arabic digits
 
     return ""  # Return empty if no building number is found
